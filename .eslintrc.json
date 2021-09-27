@@ -1,0 +1,18 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": ["eslint:recommended", "react-app", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+    "plugins": ["@typescript-eslint"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "tsconfig.json",
+        "tsconfigRootDir": "."
+    },
+    "rules": {
+        "jsx-quotes": [1, "prefer-double"],
+        "@typescript-eslint/no-explicit-any": 2,
+        "@typescript-eslint/naming-convention": ["off"]
+    }
+}
