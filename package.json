@@ -28,9 +28,11 @@
         "preact": "10.5.14"
     },
     "devDependencies": {
+        "@types/chrome": "0.0.158",
         "@typescript-eslint/eslint-plugin": "4.31.2",
         "@typescript-eslint/parser": "4.31.2",
         "cpy": "8.1.2",
+        "del": "6.0.0",
         "esbuild": "0.13.2",
         "esbuild-plugin-sass": "0.6.0",
         "eslint": "7.32.0",
