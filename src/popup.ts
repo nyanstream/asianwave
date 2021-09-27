@@ -1,7 +1,7 @@
 import 'preact/debug';
-import { h, render } from 'preact';
+import { render } from 'preact';
 
-import App from './PopupJSX/Popup';
+import App from './jsx/Popup';
 
 import './styles/popup.scss';
 
