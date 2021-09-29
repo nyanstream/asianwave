@@ -4,16 +4,19 @@ import sassPlugin from 'esbuild-plugin-sass';
 import del from 'del';
 import cpy from 'cpy';
 
-await del('dist', { force: true });
+const SRC_PATH = 'src';
+const DIST_PATH = 'dist';
+
+await del(DIST_PATH, { force: true });
 
 await esbuild
     .build({
-        entryPoints: ['src/popup.ts', 'src/background.ts', 'src/options.ts'],
+        entryPoints: [`${SRC_PATH}/popup.ts'`, `${SRC_PATH}/background.ts'`, `${SRC_PATH}/options.ts'`],
         target: 'esnext',
         format: 'esm',
         bundle: true,
         // minify: true,
-        outdir: 'dist',
+        outdir: DIST_PATH,
         loader: {
             '.html': 'text',
         },
@@ -24,6 +27,6 @@ await esbuild
     })
     .catch(e => console.error(e.message));
 
-await cpy('public/manifest.json', 'dist');
-await cpy('public/pages', 'dist/pages');
-await cpy('public/assets/icons', 'dist/assets/icons');
+await cpy('public/manifest.json', DIST_PATH);
+await cpy('public/pages', `${DIST_PATH}/pages`);
+await cpy('public/assets/icons', `${DIST_PATH}/assets/icons'`);
