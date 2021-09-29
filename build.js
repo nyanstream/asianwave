@@ -1,5 +1,6 @@
 import esbuild from 'esbuild';
 import sassPlugin from 'esbuild-plugin-sass';
+import svgPlugin from 'esbuild-plugin-svg';
 
 import del from 'del';
 import cpy from 'cpy';
@@ -23,10 +24,17 @@ await esbuild
         jsx: 'transform',
         jsxFactory: 'h',
         jsxFragment: 'Fragment',
-        plugins: [sassPlugin()],
+        plugins: [sassPlugin(), svgPlugin()],
     })
     .catch(e => console.error(e.message));
 
-await cpy('public/manifest.json', DIST_PATH);
-await cpy('public/pages', `${DIST_PATH}/pages`);
-await cpy('public/assets/icons', `${DIST_PATH}/assets/icons`);
+const ResourcesToCopy = [
+    ['public/manifest.json', DIST_PATH],
+    ['public/pages', `${DIST_PATH}/pages`],
+    ['public/assets/logo.png', `${DIST_PATH}/assets`],
+    ['public/assets/icons', `${DIST_PATH}/assets/icons`],
+];
+
+for (let item of ResourcesToCopy) {
+    await cpy(item[0], item[1]);
+}

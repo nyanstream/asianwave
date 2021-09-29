@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+$primeColor: #fba9ad;
+
+:root {
+    --primeColor: #{$primeColor};
+    --primeColor-5d: #{darken($primeColor, 5%)};
+    --primeColor-10d: #{darken($primeColor, 10%)};
+    --primeColor-15d: #{darken($primeColor, 15%)};
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: #fff;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+}
