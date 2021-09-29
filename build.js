@@ -11,7 +11,7 @@ await del(DIST_PATH, { force: true });
 
 await esbuild
     .build({
-        entryPoints: [`${SRC_PATH}/popup.ts'`, `${SRC_PATH}/background.ts'`, `${SRC_PATH}/options.ts'`],
+        entryPoints: [`${SRC_PATH}/popup.ts`, `${SRC_PATH}/background.ts`, `${SRC_PATH}/options.ts`],
         target: 'esnext',
         format: 'esm',
         bundle: true,
