@@ -35,6 +35,7 @@
         "del": "6.0.0",
         "esbuild": "0.13.2",
         "esbuild-plugin-sass": "0.6.0",
+        "esbuild-plugin-svg": "0.1.0",
         "eslint": "7.32.0",
         "eslint-config-prettier": "8.3.0",
         "eslint-plugin-prettier": "4.0.0",
