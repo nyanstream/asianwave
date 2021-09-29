@@ -17,6 +17,12 @@
         "service_worker": "background.js"
     },
 
+    "icons": {
+        "32": "assets/icons/logo-32.png",
+        "64": "assets/icons/logo-64.png",
+        "128": "assets/icons/logo-128.png"
+    },
+
     "action": {
         "default_title": "Asian Wave",
         "default_icon": {
@@ -32,5 +38,7 @@
         "open_in_tab": false
     },
 
-    "permissions": ["storage"]
+    "permissions": ["<all_urls>", "storage"],
+
+    "optional_permissions": ["notifications"]
 }

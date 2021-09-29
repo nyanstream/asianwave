@@ -29,4 +29,4 @@ await esbuild
 
 await cpy('public/manifest.json', DIST_PATH);
 await cpy('public/pages', `${DIST_PATH}/pages`);
-await cpy('public/assets/icons', `${DIST_PATH}/assets/icons'`);
+await cpy('public/assets/icons', `${DIST_PATH}/assets/icons`);
