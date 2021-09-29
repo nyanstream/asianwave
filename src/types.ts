@@ -1,7 +1,6 @@
 export type RadioLangType = 'int' | 'ru' | 'en';
 
 export type RadioInfoType = {
-    id: string; // MUST be unique!
     title: string;
     lang: RadioLangType;
     iconURL?: string;
@@ -9,6 +8,10 @@ export type RadioInfoType = {
     streamEndpointURL: string;
     apiEndpointURL: string;
     apiContentResponseType?: 'json' | 'text'; // json by default
+};
+
+export type RadiosDataObjectType = {
+    [id: string]: RadioInfoType;
 };
 
 export type AbstractRadioAPIResponse = {

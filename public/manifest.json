@@ -38,7 +38,9 @@
         "open_in_tab": false
     },
 
-    "permissions": ["<all_urls>", "storage"],
+    "permissions": ["storage", "tabs", "scripting"],
+
+    "host_permissions": ["*://*/*"],
 
     "optional_permissions": ["notifications"]
 }

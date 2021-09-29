@@ -1,8 +1,7 @@
-import type { RadioInfoType } from './types';
+import type { RadiosDataObjectType } from './types';
 
-const RadiosData: RadioInfoType[] = [
-    {
-        id: 'r-a-d-io',
+const RadiosData: RadiosDataObjectType = {
+    'r-a-d-io': {
         title: 'R/a/dio',
         lang: 'en',
         websiteURL: 'https://r-a-d.io',
@@ -10,8 +9,7 @@ const RadiosData: RadioInfoType[] = [
         apiEndpointURL: 'https://r-a-d.io/api',
     },
 
-    {
-        id: 'radio-nami',
+    'radio-nami': {
         title: 'Radio Nami',
         lang: 'ru',
         websiteURL: 'https://radionami.com',
@@ -20,14 +18,13 @@ const RadiosData: RadioInfoType[] = [
         apiContentResponseType: 'text',
     },
 
-    {
-        id: 'anison-fm',
+    'anison-fm': {
         title: 'ANISON.FM',
         lang: 'ru',
         websiteURL: 'https://anison.fm',
         streamEndpointURL: 'https://pool.anison.fm/AniSonFM(320)',
         apiEndpointURL: 'https://anison.fm/status.php',
     },
-];
+};
 
 export default RadiosData;
