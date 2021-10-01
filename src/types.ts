@@ -6,7 +6,7 @@ export type RadioInfoType = {
     iconURL?: string;
     websiteURL?: string;
     streamEndpointURL: string;
-    apiEndpointURL: string;
+    apiEndpointURL?: string;
     apiContentResponseType?: 'json' | 'text'; // json by default
 };
 
