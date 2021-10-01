@@ -25,10 +25,12 @@
         ]
     },
     "dependencies": {
+        "lodash.debounce": "4.0.8",
         "preact": "10.5.14"
     },
     "devDependencies": {
         "@types/chrome": "0.0.158",
+        "@types/lodash.debounce": "4.0.6",
         "@typescript-eslint/eslint-plugin": "4.31.2",
         "@typescript-eslint/parser": "4.31.2",
         "cpy": "8.1.2",

@@ -5,16 +5,15 @@
 
     "version": "1.0.0",
 
-    "manifest_version": 3,
+    "manifest_version": 2,
 
     "homepage_url": "https://github.com/nyanstream/asianwave",
-
-    "_default_locale": "ru",
 
     "offline_enabled": false,
 
     "background": {
-        "service_worker": "background.js"
+        "persistent": true,
+        "scripts": ["background.js"]
     },
 
     "icons": {
@@ -23,7 +22,7 @@
         "128": "assets/icons/logo-128.png"
     },
 
-    "action": {
+    "browser_action": {
         "default_title": "Asian Wave",
         "default_icon": {
             "32": "assets/icons/logo-32.png",
@@ -38,9 +37,7 @@
         "open_in_tab": false
     },
 
-    "permissions": ["storage", "tabs", "scripting"],
-
-    "host_permissions": ["*://*/*"],
+    "permissions": ["*://*/*", "storage", "tabs"],
 
     "optional_permissions": ["notifications"]
 }

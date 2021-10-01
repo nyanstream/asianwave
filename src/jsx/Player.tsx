@@ -1,12 +1,13 @@
 import { h } from 'preact';
 import { useState, useEffect, useCallback } from 'preact/hooks';
 
-import { MESSAGE_RADIO_ID_CHANGE } from '../consts';
-import { LOCAL_STORAGE_RADIO_STATE } from '../consts';
-import { MESSAGE_RADIO_PLAY_EVENT, MESSAGE_RADIO_PAUSE_EVENT } from '../consts';
-import { MESSAGE_RADIO_VOLUME_CHANGE, SYNC_STORAGE_RADIO_VOLUME } from '../consts';
-
 import { RADIO_DEFAULT_VOLUME } from '../consts';
+
+import { LOCAL_STORAGE_RADIO_STATE, LOCAL_STORAGE_AUDIO_IS_LOADING } from '../consts';
+import { SYNC_STORAGE_RADIO_VOLUME } from '../consts';
+import { MESSAGE_AUDIO_VOLUME_CHANGE } from '../consts';
+
+import { storageChangesChecker } from '../utilities';
 
 import playIcon from '../icons/play.svg';
 import pauseIcon from '../icons/pause.svg';
@@ -15,14 +16,18 @@ const Player = () => {
     const [PlayerState, setPlayerState] = useState<'play' | 'pause'>('pause');
     const [CurrentVolume, setCurrentVolume] = useState(RADIO_DEFAULT_VOLUME);
 
+    const [IsAudioLoading, setIsAudioLoading] = useState(false);
+
     useEffect(() => {
-        chrome.storage.local.get([LOCAL_STORAGE_RADIO_STATE], storageItems => {
-            const ddd = document.querySelector('.header__brandText');
-
-            if (ddd) ddd.innerHTML = JSON.stringify(storageItems);
-
+        chrome.storage.local.get([LOCAL_STORAGE_RADIO_STATE, LOCAL_STORAGE_AUDIO_IS_LOADING], storageItems => {
             if (LOCAL_STORAGE_RADIO_STATE in storageItems) {
                 setPlayerState(storageItems[LOCAL_STORAGE_RADIO_STATE]);
+            }
+
+            if (LOCAL_STORAGE_AUDIO_IS_LOADING in storageItems) {
+                if (storageItems[LOCAL_STORAGE_AUDIO_IS_LOADING]) {
+                    setIsAudioLoading(true);
+                }
             }
         });
 
@@ -32,12 +37,11 @@ const Player = () => {
             }
         });
 
-        chrome.runtime.onMessage.addListener(message => {
-            switch (message) {
-                case MESSAGE_RADIO_ID_CHANGE: {
-                    setPlayerState('pause');
-                    break;
-                }
+        chrome.storage.onChanged.addListener(storageChanges => {
+            console.log(storageChanges);
+
+            if (storageChangesChecker(storageChanges, LOCAL_STORAGE_AUDIO_IS_LOADING)) {
+                setIsAudioLoading(storageChanges[LOCAL_STORAGE_AUDIO_IS_LOADING].newValue);
             }
         });
     }, []);
@@ -48,24 +52,28 @@ const Player = () => {
         setPlayerState(NewState);
 
         chrome.storage.local.set({ [LOCAL_STORAGE_RADIO_STATE]: NewState });
-
-        chrome.runtime.sendMessage(currentState === 'play' ? MESSAGE_RADIO_PAUSE_EVENT : MESSAGE_RADIO_PLAY_EVENT);
     }, []);
 
     const volumeChangeHandler = useCallback((value: number) => {
         setCurrentVolume(value);
 
-        chrome.storage.sync.set({ [SYNC_STORAGE_RADIO_VOLUME]: String(value) });
-
-        chrome.runtime.sendMessage(MESSAGE_RADIO_VOLUME_CHANGE);
+        // здесь используется sendMessage, потому что на установку
+        // значений в storage есть ограничения
+        chrome.runtime.sendMessage({ cmd: MESSAGE_AUDIO_VOLUME_CHANGE, value });
     }, []);
 
     return (
-        <div className="player" data-state={CurrentVolume} style={{ '--volume': `${CurrentVolume}%` }}>
+        <div
+            className="player"
+            style={{ '--volume': `${CurrentVolume}%` }}
+            data-state={CurrentVolume}
+            data-is-audio-loading={IsAudioLoading ? '' : null}>
             <button
                 className="player__playPauseBtn"
                 onClick={() => playPauseButtonClickHandler(PlayerState)}
-                dangerouslySetInnerHTML={{ __html: PlayerState === 'pause' ? playIcon : pauseIcon }}></button>
+                dangerouslySetInnerHTML={{ __html: PlayerState === 'pause' ? playIcon : pauseIcon }}
+                disabled={IsAudioLoading}
+            />
             <input
                 class="player__volumeInput"
                 type="range"
